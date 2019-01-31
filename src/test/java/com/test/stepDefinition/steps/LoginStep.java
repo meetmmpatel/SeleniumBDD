@@ -5,16 +5,18 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.test.stepDefinition.page.LoginPage;
 
+import net.serenitybdd.core.annotations.findby.By;
 import net.thucydides.core.annotations.Step;
 
 public class LoginStep {
 
 	LoginPage loginPage;
+	ChromeOptions chromeOptions = new ChromeOptions();
+	ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
 
 	@Step
 	public void openTheWebsite() {
-		ChromeOptions chromeOptions = new ChromeOptions();
-		ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
+	
 		loginPage.setDriver(chromeDriver);
 		loginPage.getDriver().manage().deleteAllCookies();
 		loginPage.open();
@@ -34,6 +36,11 @@ public class LoginStep {
 	@Step
 	public void clickLogin() {
 		loginPage.verifyLoginButton();
+	}
+	
+	@Step
+	public void readErrorMessage() {
+		 chromeDriver.findElement(By.id("loginSuccessMessage")).getText();
 	}
 
 }
